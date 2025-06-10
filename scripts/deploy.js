@@ -58,26 +58,22 @@ async function main() {
     // const usdc = await ethers.getContractFactory("TestToken");
     // const USDC = await usdc.deploy("DustFlow Test USDC", "USDC", 6);
     // USDCAddress = await USDC.target;
-    USDCAddress = "0x31CA67048dDBC253946D92CbE62fe9cD8946ef21";
-    console.log("USDC Address:", USDCAddress);
+    USDCAddress = "0xDF914A54fD5081FF5001b225191Cf41C8A40abF4";
   }
+  console.log("USDC Address:", USDCAddress);
+
   // const testToken = await ethers.getContractFactory("TestToken");
   // const DTT = await testToken.deploy("DustFlow Test Token", "DTT", 18);
   // const DTTAddress = await DTT.target;
-  const DTTAddress = "0x9970dFeC70dFF5B432Fa09f946fB25ECcfbed248";
+  const DTTAddress = "0x183598b50174566b46bd419b392c1B8FC9087cB3";
   console.log("DTT Address:", DTTAddress);
 
-  if (chainId === 57054n || chainId === 688688n) {
-    // const dustCore = await ethers.getContractFactory("DustCore");
-    // DustCore = await dustCore.deploy(
-    //   owner.address,
-    //   owner.address,
-    //   owner.address,
-    //   5000
-    // );
-    // DustCoreAddress = await DustCore.target;
-    ThisDustCoreABI = DustCoreABI.abi;
-  } else if (chainId === 421614n) {
+  // const WETH = await testToken.deploy("Test WETH Token", "WETH", 18);
+  // const WETHAddress = await WETH.target;
+  const WETHAddress = "0x0B89A5452bee7e40331af133379c24735E2001Ef";
+  console.log("WETH Address:", WETHAddress);
+
+  if (chainId === 421614n || chainId === 43113n || chainId === 84532n || chainId === 11155420n) {
     const dustCore = await ethers.getContractFactory("DustAaveCore");
     DustCore = await dustCore.deploy(
       chainConfig.AaveV3Pool,
@@ -85,18 +81,26 @@ async function main() {
       owner.address,
       owner.address,
       owner.address,
+      USDCAddress,
       5000
     );
     DustCoreAddress = await DustCore.target;
     ThisDustCoreABI = DustAaveCoreABI.abi;
+  }else {
+    // const dustCore = await ethers.getContractFactory("DustCore");
+    // DustCore = await dustCore.deploy(
+    //   owner.address,
+    //   owner.address,
+    //   owner.address,
+    //   USDCAddress,
+    //   5000
+    // );
+    // DustCoreAddress = await DustCore.target;
+    ThisDustCoreABI = DustCoreABI.abi;
   }
-  DustCoreAddress = "0x36933eBD4dcC8f3714133Bf3590304aFE4192B66";
+  DustCoreAddress = "0xFA8B026CaA2d1d73CE8A9f19613364FCa9440411";
   DustCore = new ethers.Contract(DustCoreAddress, ThisDustCoreABI, owner);
   console.log("DustCore Address:", DustCoreAddress);
-
-  // const initialize = await DustCore.initialize(USDCAddress);
-  // const initializeTx = await initialize.wait();
-  // console.log("initialize:", initializeTx.hash);
 
   // const dustPool = await ethers.getContractFactory("DustPool");
   // const DustPool = await dustPool.deploy(
@@ -106,7 +110,7 @@ async function main() {
   //   USDCAddress
   // );
   // const DustPoolAddress = await DustPool.target;
-  const DustPoolAddress = "0xD7b2D0520935644C0202775574d240CEd7611eEC";
+  const DustPoolAddress = "0xa5281122370d997c005B2313373Fa3CAf6A48Ae0";
   console.log("DustPoolAddress:", DustPoolAddress);
 
   // const governance = await ethers.getContractFactory("Governance");
@@ -118,7 +122,7 @@ async function main() {
   //   owner.address
   // );
   // const GovernanceAddress = await Governance.target;
-  const GovernanceAddress = "0xC6a93b0bCC6FE42a93dA3ee47250DB47104f8eBF";
+  const GovernanceAddress = "0x9e001cd69F1565289a36BB6E74cb61Ba7E89940e";
   const Governance = new ethers.Contract(
     GovernanceAddress,
     GovernanceABI.abi,
@@ -126,48 +130,48 @@ async function main() {
   );
   console.log("Governance Address:", GovernanceAddress);
 
-  const setMarketConfig = await Governance.setMarketConfig(
-    0,
-    864000n,
-    DTTAddress,
-    {gasLimit: 100000}
-  );
-  const setMarketConfigTx = await setMarketConfig.wait();
-  console.log("setMarketConfigTx:", setMarketConfigTx.hash);
+  // const setMarketConfig = await Governance.setMarketConfig(
+  //   0,
+  //   864000n,
+  //   DTTAddress,
+  //   {gasLimit: 100000}
+  // );
+  // const setMarketConfigTx = await setMarketConfig.wait();
+  // console.log("setMarketConfigTx:", setMarketConfigTx.hash);
 
   const getMarketConfig = await Governance.getMarketConfig(0);
   console.log("getMarketConfig:", getMarketConfig);
 
-  const dustFlowFactory = await ethers.getContractFactory("DustFlowFactory");
-  const DustFlowFactory = await dustFlowFactory.deploy(GovernanceAddress);
-  const DustFlowFactoryAddress = await DustFlowFactory.target;
-  // const DustFlowFactoryAddress = "";
-  // const DustFlowFactory = new ethers.Contract(
-  //   DustFlowFactoryAddress,
-  //   DustFlowFactoryABI.abi,
-  //   owner
-  // );
+  // const dustFlowFactory = await ethers.getContractFactory("DustFlowFactory");
+  // const DustFlowFactory = await dustFlowFactory.deploy(GovernanceAddress);
+  // const DustFlowFactoryAddress = await DustFlowFactory.target;
+  const DustFlowFactoryAddress = "0x97eC4D44298b4E2C39dD4c0a841b12eC16616356";
+  const DustFlowFactory = new ethers.Contract(
+    DustFlowFactoryAddress,
+    DustFlowFactoryABI.abi,
+    owner
+  );
   console.log("DustFlowFactory Address:", DustFlowFactoryAddress);
 
-  const dustFlowHelper = await ethers.getContractFactory("DustFlowHelper");
-  const DustFlowHelper = await dustFlowHelper.deploy(
-    GovernanceAddress,
-    DustFlowFactoryAddress
-  );
-  const DustFlowHelperAddress = await DustFlowHelper.target;
-  // const DustFlowHelperAddress = "";
-  // const DustFlowHelper = new ethers.Contract(
-  //   DustFlowHelperAddress,
-  //   DustFlowHelperABI.abi,
-  //   owner
+  // const dustFlowHelper = await ethers.getContractFactory("DustFlowHelper");
+  // const DustFlowHelper = await dustFlowHelper.deploy(
+  //   GovernanceAddress,
+  //   DustFlowFactoryAddress
   // );
+  // const DustFlowHelperAddress = await DustFlowHelper.target;
+  const DustFlowHelperAddress = "0x08A10f9C46F464705E3791F55B8CA8f7d4A4E6bc";
+  const DustFlowHelper = new ethers.Contract(
+    DustFlowHelperAddress,
+    DustFlowHelperABI.abi,
+    owner
+  );
   console.log("DustFlowHelper Address:", DustFlowHelperAddress);
 
-  const changeDustFlowFactory = await Governance.changeDustFlowFactory(
-    DustFlowFactoryAddress
-  );
-  const changeDustFlowFactoryTx = await changeDustFlowFactory.wait();
-  console.log("changeDustFlowFactory:", changeDustFlowFactoryTx.hash);
+  // const changeDustFlowFactory = await Governance.changeDustFlowFactory(
+  //   DustFlowFactoryAddress
+  // );
+  // const changeDustFlowFactoryTx = await changeDustFlowFactory.wait();
+  // console.log("changeDustFlowFactory:", changeDustFlowFactoryTx.hash);
 
   // const changeConfig = await DustFlowHelper.changeConfig(
   //   GovernanceAddress,
@@ -190,21 +194,11 @@ async function main() {
   // const changeCollateralTx = await changeCollateral.wait();
   // console.log("changeCollateral:", changeCollateralTx.hash);
 
-  // const changeCollateral2 = await Governance.changeCollateral(
-  //     1,
-  //     DustCoreAddress,
-  //     {
-  //       gasLimit: 100000,
-  //     }
-  //   );
-  //   const changeCollateral2Tx = await changeCollateral2.wait();
-  //   console.log("changeCollateral2:", changeCollateral2Tx.hash);
-
-  const createMarket1 = await DustFlowFactory.createMarket({
-    gasLimit: 5200000
-  });
-  const createMarket1Tx = await createMarket1.wait();
-  console.log("createMarket1 tx:", createMarket1Tx.hash);
+  // const createMarket1 = await DustFlowFactory.createMarket({
+  //   gasLimit: 5200000
+  // });
+  // const createMarket1Tx = await createMarket1.wait();
+  // console.log("createMarket1 tx:", createMarket1Tx.hash);
 
   const getMarketInfo1 = await DustFlowFactory.getMarketInfo(0n);
   console.log("getMarketInfo1:", getMarketInfo1);
@@ -252,8 +246,8 @@ async function main() {
 
   const setMarketConfig2 = await Governance.setMarketConfig(
     1,
-    200000n,
-    DTTAddress
+    864000n,
+    WETHAddress
   );
   const setMarketConfig2Tx = await setMarketConfig2.wait();
   console.log("setMarketConfig2Tx:", setMarketConfig2Tx.hash);
@@ -290,8 +284,10 @@ async function main() {
 
   //
 
+  config.Network = network.name;
   config.USDC = USDCAddress;
   config.DTT = DTTAddress;
+  config.WETH = WETHAddress;
   config.DustCore = DustCoreAddress;
   config.DustPool = DustPoolAddress;
   (config.Governance = GovernanceAddress),

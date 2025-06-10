@@ -2,11 +2,11 @@
 
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)]
 
-A decentralized pre-market trading platform based on the RWA stablecoin DUST.
+DustFlow is a decentralized futures settlement market with a built-in yield-generating stablecoin called DUST.  
 
 ## Features
 - **Pre-market Trading**: Trade tokens of upcoming projects before they go live. 
-- **Mint DUST**: Create DUST stablecoins backed by Real World Asset (RWA) stablecoins.
+- **Mint DUST**: Create DUST stablecoins backed by Real World Asset (RWA) stablecoins.  
 - **Versatile Payments**:
   - Standard transfers.
   - Secure transfers using the Flow protocol with DUST.
@@ -27,7 +27,7 @@ A decentralized pre-market trading platform based on the RWA stablecoin DUST.
 | **Order Cancellation** (if market open)      | 0.5%     |
 
 ## Architecture
-- [DustFlow Architecture] <https://DustFlow-docs.vercel.app/docs/architecture>
+- [DustFlow Architecture] <https://docs.dustflow.xyz/docs/architecture>
 - **Smart Contracts**: Core on-chain logic for order management and settlement.
 - **Off-Chain Modules**: Matching engine, auction algorithms, and monitoring services.
 - **RWA Integration**: External services to mint and redeem DUST against real-world assets.
@@ -45,7 +45,7 @@ A decentralized pre-market trading platform based on the RWA stablecoin DUST.
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/quqicolour/DustFlow.git
+git clone https://github.com/VineFiLabs/DustFlow.git
 cd DustFlow
 
 # Install dependencies
@@ -55,7 +55,7 @@ npm install  # or yarn
 ### Configuration
 Create a `.env` file with the following variables:
 ```
-RPC_URL=<Your Ethereum RPC URL>
+RPC_URL=<Your RPC URL>
 PRIVATE_KEY1=<Your deployer account private key>
 ```
 
@@ -64,15 +64,8 @@ PRIVATE_KEY1=<Your deployer account private key>
 
 
 # Deploy contracts via Ignition
-npx hardhat run scripts/deploy.js --network pharos
+npx hardhat run scripts/deploy.js --network 'Network Name'
 ```
-
-## Contributing
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/MyFeature`).
-3. Commit your changes (`git commit -m 'Add MyFeature'`).
-4. Push to the branch (`git push origin feature/MyFeature`).
-5. Open a pull request.
 
 ## License
 This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) file for details.

@@ -5,32 +5,9 @@ require('dotenv').config();
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   networks: { 
-    pharos_dev: {
-      url: process.env.Pharos_Devnet_Rpc,
-      accounts: [process.env.PRIVATE_KEY1]
-    },
-    pharos_testnet: {
-      url: process.env.Pharos_Testnet_Rpc,
-      accounts: [process.env.PRIVATE_KEY1]
-    },
-    arb_sepolia: {
-      url: process.env.Arbitrum_Sepolia_Rpc,
-      accounts: [process.env.PRIVATE_KEY1]
-    },
-    base_sepolia: {
-      url: process.env.Base_Sepolia_Rpc,
-      accounts: [process.env.PRIVATE_KEY1]
-    },
-    monad_testnet: {
-      url: process.env.Monad_Testnet_RPC,
-      accounts: [process.env.PRIVATE_KEY1]
-    },
-    sonic_testnet: {
-      url: process.env.Sonic_Testnet_RPC,
-      accounts: [process.env.PRIVATE_KEY1]
-    },
-    bnb_testnet: {
-      url: process.env.Bnb_Testnet_RPC,
+    hyperion_testnet: {
+      chainId: 133717,
+      url: process.env.Hyperion_Testnet_RPC,
       accounts: [process.env.PRIVATE_KEY1]
     }
   },
